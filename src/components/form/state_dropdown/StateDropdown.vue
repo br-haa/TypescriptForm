@@ -1,6 +1,6 @@
 <template>
   <DropdownBase
-    @input="validateInput"
+    @input="setRequired"
     :base-text="StateText"
     :Options="StatesArr"
     :base-id="`States`"
@@ -15,8 +15,7 @@ import DropdownBase from "../dropdown_base/DropdownBase.vue";
 export default Vue.extend({
   components: { DropdownBase },
   name: "StateDropdown",
-  data() {
-    return {
+  data: () => ({
       StatesArr: [
         {
           name: "Alabama",
@@ -255,8 +254,7 @@ export default Vue.extend({
           abbreviation: "WY"
         }
       ]
-    };
-  },
+  }),
   props: {
     NotRequired: {
       type: Boolean
@@ -270,8 +268,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    validateInput: function(input) {
-      if (this.NotRequired === true) {
+    setRequired(input: string | undefined) {
+      if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
           //looking for if its required or not
@@ -281,6 +279,11 @@ export default Vue.extend({
         }
         this.$emit("validating", this.getDuplicate, this.getDuplicate, n, true);
       } else {
+        this.validateInput(input)
+      }
+    },
+    validateInput(input: string | undefined) {
+
         if (input !== undefined && input !== "") {
           // making sure its not undefined or an empty string
           this.$emit(
@@ -300,7 +303,6 @@ export default Vue.extend({
           );
         }
       }
-    }
   },
   computed: {
     getDuplicate: function() {
@@ -312,7 +314,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.validateInput();
+    this.setRequired(undefined);
   }
 });
 </script>

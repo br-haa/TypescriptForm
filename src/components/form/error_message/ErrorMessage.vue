@@ -10,12 +10,12 @@ export default Vue.extend({
   name: "ErrorMessage",
   data() {
     return {
-      statusText: []
+      statusText: [] as string[]
     };
   },
   props: {
     ReceivedText: {
-      type: Array
+      type: Array as () => string[]
     }
   },
   watch: {
@@ -28,9 +28,10 @@ export default Vue.extend({
   },
   methods: {
     openStatus() {
-      const status = document.getElementById("status");
-      status.classList.remove("status-close");
-      status.classList.add("status-open");
+      const status: HTMLElement | null = document.getElementById("status");
+      const htmlStatus = status as HTMLElement;
+      htmlStatus.classList.remove("status-close");
+      htmlStatus.classList.add("status-open");
       setTimeout(() => {
         this.addOnClick();
       }, 500);
@@ -41,9 +42,10 @@ export default Vue.extend({
     },
 
     closeStatus() {
-      const status = document.getElementById("status");
-      status.classList.add("status-close");
-      status.classList.remove("status-open");
+      const status: HTMLElement | null = document.getElementById("status");
+      const htmlStatus = status as HTMLElement;
+      htmlStatus.classList.add("status-close");
+      htmlStatus.classList.remove("status-open");
       this.statusText = [];
       this.removeOnClick();
     },

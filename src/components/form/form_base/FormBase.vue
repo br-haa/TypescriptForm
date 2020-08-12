@@ -195,6 +195,12 @@ interface ValidationObjectInterface {
   status: boolean;
   value: string;
 }
+interface CtmObjectInterface {
+  name: string;
+  phone: string;
+  email: string;
+  custom: object;
+}
 export default Vue.extend({
   components: {
     DateInput,
@@ -248,7 +254,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    getHideValues: function() {
+    getHideValues: function(): boolean {
       // controls what shows up if modal is or isn't active
       if (this.IsModal) {
         return !this.HideForm;
@@ -293,7 +299,7 @@ export default Vue.extend({
         })
       ) {
         // if a false is found for an object status its goes to error message
-        this.errorText = [];
+        this.errorText = [] as string[];
         this.HandleErrorMessage();
       } else {
         console.log("Posting this data"); // console logging the visible form data
@@ -367,24 +373,7 @@ export default Vue.extend({
     ThankYouPageActivate(): void {
       // activating thankyou modal
       this.thankYouActive = true;
-    },
-    SpanLast(): void {
-      // making the last custom field span two if there is an odd amount of them
-      const spanBoi = document.querySelectorAll(".BasicField");
-      if (!this.IsEven()) {
-        spanBoi[spanBoi.length - 1].style.cssText = "grid-column: span 2";
-      }
-    },
-    IsEven(): boolean {
-      // checks if the added fields are and even or odd amount
-      const fields = document.querySelectorAll(".BasicField");
-      return fields.length % 2 === 0;
     }
-  },
-  mounted() {
-    if (this.FormType === 1) {
-      this.SpanLast();
-    } // for now till I find a good way to do it for the 3 span one.
   }
 });
 </script>

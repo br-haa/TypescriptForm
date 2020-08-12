@@ -37,21 +37,22 @@ export default Vue.extend({
         }
         this.$emit("validating", "Email", n, true);
       } else {
+
         this.validateInput(input);
       }
-},
+    },
     validateInput: function(input: string | undefined) {
-        const emailPattern = /^[\w.-]+@([\w-]+\.)+[a-zA-Z]+$/;
-        if (emailPattern.test(input)) {
-          console.log("validEmail " + input);
-          this.$emit("validating", "Email", "Email", input, true);
-        } else {
-          this.$emit("validating", "Email", "Email", input, false);
-        }
+      const emailPattern = /^[\w.-]+@([\w-]+\.)+[a-zA-Z]+$/;
+      if (emailPattern.test(input as string)) {
+        console.log("validEmail " + input);
+        this.$emit("validating", "Email", "Email", input, true);
+      } else {
+        this.$emit("validating", "Email", "Email", input, false);
       }
+    }
   },
   mounted() {
-    this.setRequired();
+    this.setRequired(undefined);
   }
 });
 </script>

@@ -1,6 +1,6 @@
 <template>
   <TextAreaBase
-    @input="validateInput"
+    @input="setRequired"
     :area-text="TextText"
     :area-id="TextId"
     :area-name="getDefaultName"
@@ -57,8 +57,8 @@ export default Vue.extend({
     return {};
   },
   methods: {
-    validateInput: function(input) {
-      if (this.NotRequired === true) {
+    setRequired(input: string | undefined){
+      if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
           n = `n/a`;
@@ -67,6 +67,11 @@ export default Vue.extend({
         }
         this.$emit("validating", this.getDefaultName, this.TextId, n, true);
       } else {
+        this.validateInput(input)
+      }
+    },
+    validateInput: function(input: string | undefined) {
+
         if (input !== undefined && input !== "") {
           this.$emit(
             "validating",
@@ -85,10 +90,9 @@ export default Vue.extend({
           );
         }
       }
-    }
   },
   mounted() {
-    this.validateInput();
+    this.setRequired(undefined);
   }
 });
 </script>

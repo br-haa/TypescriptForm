@@ -1,6 +1,6 @@
 <template>
   <DateBase
-    @input="validateInput"
+    @input="setRequired"
     :base-text="`Date`"
     :base-id="`date`"
     :base-name="`date`"
@@ -9,9 +9,10 @@
   ></DateBase>
 </template>
 
-<script>
-import DateBase from "./DateBase";
-export default {
+<script lang="ts">
+import Vue from "vue";
+import DateBase from "./DateBase.vue";
+export default Vue.extend({
   components: { DateBase },
   name: "DateInput",
 
@@ -27,8 +28,8 @@ export default {
     }
   },
   methods: {
-    validateInput: function(input) {
-      if (this.NotRequired === true) {
+    setRequired(input: string | undefined) {
+      if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
           n = `n/a`;
@@ -37,18 +38,21 @@ export default {
         }
         this.$emit("validating", "Date", n, true);
       } else {
+        this.validateInput(input);
+      }
+    },
+    validateInput: function(input: string | undefined) {
         if (input !== undefined && input !== "") {
           this.$emit("validating", "Date", "Date", input, true);
         } else {
           this.$emit("validating", "Date", "Date", input, false);
         }
       }
-    }
   },
   mounted() {
-    this.validateInput();
+    this.setRequired(undefined);
   }
-};
+});
 </script>
 
 <style scoped></style>

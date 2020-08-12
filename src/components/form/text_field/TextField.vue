@@ -1,6 +1,6 @@
 <template>
   <BaseField
-    @input="validateInput"
+    @input="setRequired"
     :base-text="TextText"
     :base-id="TextId"
     :base-name="getDefaultName"
@@ -44,7 +44,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    validateInput: function(input) {
+    setRequired(input: string | undefined){
       if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
@@ -55,6 +55,11 @@ export default Vue.extend({
         }
         this.$emit("validating", this.getDefaultName, this.TextId, n, true);
       } else {
+        this.validateInput(input)
+      }
+    },
+    validateInput: function(input: string | undefined) {
+
         if (input !== undefined && input !== "") {
           // making sure its not undefined or an empty string
           this.$emit(
@@ -74,10 +79,9 @@ export default Vue.extend({
           );
         }
       }
-    }
   },
   mounted() {
-    this.validateInput();
+    this.setRequired(undefined);
   }
 });
 </script>

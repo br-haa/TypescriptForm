@@ -1,6 +1,6 @@
 <template>
   <BaseField
-    @input="validateInput"
+    @input="setRequired"
     :base-text="`Phone`"
     :base-id="`Phone`"
     :base-name="`phone`"
@@ -21,7 +21,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    validateInput: function(input) {
+    setRequired(input: string | undefined){
       if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
@@ -31,18 +31,21 @@ export default Vue.extend({
         }
         this.$emit("validating", "Phone", n, true);
       } else {
+        this.validateInput(input);
+      }
+    },
+    validateInput(input: string | undefined) {
         const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-        if (phonePattern.test(input)) {
+        if (phonePattern.test(input as string)) {
           console.log("checking phone " + input);
           this.$emit("validating", "Phone", "Phone", input, true);
         } else {
           this.$emit("validating", "Phone", "Phone", input, false);
         }
-      }
     }
   },
   mounted() {
-    this.validateInput();
+    this.setRequired(undefined);
   }
 });
 </script>
