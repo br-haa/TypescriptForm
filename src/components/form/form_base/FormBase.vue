@@ -196,10 +196,11 @@ interface ValidationObjectInterface {
   value: string;
 }
 interface CtmObjectInterface {
+  country_code: string;
   name: string;
   phone: string;
   email: string;
-  custom: object;
+  custom: any;
 }
 export default Vue.extend({
   components: {
@@ -220,7 +221,7 @@ export default Vue.extend({
     validationObjects: [] as ValidationObjectInterface[], // the objects as they get pulled from the fields
     errorText: [] as string[], // where the error messages go
     thankYouActive: false, // triggers the thank-you page
-    CtmObject: {}, // the final object that gets posted to CTM
+    CtmObject: {} as CtmObjectInterface, // the final object that gets posted to CTM
     AllData: [] as ValidationObjectInterface[] // the combination of the validated objects and Post data
   }),
   props: {
@@ -316,8 +317,8 @@ export default Vue.extend({
         // eslint-disable-next-line @typescript-eslint/camelcase
         country_code: "1", // the expected country code e.g. +1, +44, +55, +61, etc... the plus is excluded
         name: this.search(`FirstName`) + " " + this.search(`LastName`),
-        phone: this.search(`Phone`),
-        email: this.search(`Email`),
+        phone: this.search(`Phone`) as string,
+        email: this.search(`Email`) as string,
         custom: {}
       };
       this.AllData = this.validationObjects.concat(
@@ -366,7 +367,7 @@ export default Vue.extend({
       for (let i = 0; i < this.validationObjects.length; i++) {
         const oob: ValidationObjectInterface = this.validationObjects[i];
         if (oob.id === id) {
-          return oob.value;
+          return oob.value as string;
         }
       }
     },
