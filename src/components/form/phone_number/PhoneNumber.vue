@@ -21,7 +21,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    setRequired(input: string | undefined){
+    setRequired(input: string | undefined) {
       if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
@@ -35,13 +35,13 @@ export default Vue.extend({
       }
     },
     validateInput(input: string | undefined) {
-        const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-        if (phonePattern.test(input as string)) {
-          console.log("checking phone " + input);
-          this.$emit("validating", "Phone", "Phone", input, true);
-        } else {
-          this.$emit("validating", "Phone", "Phone", input, false);
-        }
+      const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+      if (phonePattern.test(input as string)) {
+        console.log("checking phone " + input);
+        this.$emit("validating", "Phone", "Phone", input, true);
+      } else {
+        this.$emit("validating", "Phone", "Phone", input, false);
+      }
     }
   },
   mounted() {

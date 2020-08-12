@@ -44,7 +44,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    setRequired(input: string | undefined){
+    setRequired(input: string | undefined) {
       if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
@@ -55,30 +55,23 @@ export default Vue.extend({
         }
         this.$emit("validating", this.getDefaultName, this.TextId, n, true);
       } else {
-        this.validateInput(input)
+        this.validateInput(input);
       }
     },
     validateInput: function(input: string | undefined) {
-
-        if (input !== undefined && input !== "") {
-          // making sure its not undefined or an empty string
-          this.$emit(
-            "validating",
-            this.getDefaultName,
-            this.TextId,
-            input,
-            true
-          );
-        } else {
-          this.$emit(
-            "validating",
-            this.getDefaultName,
-            this.TextId,
-            input,
-            false
-          );
-        }
+      if (input !== undefined && input !== "") {
+        // making sure its not undefined or an empty string
+        this.$emit("validating", this.getDefaultName, this.TextId, input, true);
+      } else {
+        this.$emit(
+          "validating",
+          this.getDefaultName,
+          this.TextId,
+          input,
+          false
+        );
       }
+    }
   },
   mounted() {
     this.setRequired(undefined);

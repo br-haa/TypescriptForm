@@ -27,7 +27,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    setRequired(input: string | undefined){
+    setRequired(input: string | undefined) {
       if (this.NotRequired) {
         let n = input;
         if (input === undefined) {
@@ -37,19 +37,18 @@ export default Vue.extend({
         }
         this.$emit("validating", "Zip", n, true);
       } else {
-        this.validateInput(input)
+        this.validateInput(input);
       }
     },
     validateInput: function(input: string | undefined) {
-
-        const emailPattern = /^[0-9]{5}(?:-[0-9]{4})?$/;
-        if (emailPattern.test(input as string)) {
-          console.log("validZip " + input);
-          this.$emit("validating", "Zip", "Zip", input, true);
-        } else {
-          this.$emit("validating", "Zip", "Zip", input, false);
-        }
+      const emailPattern = /^[0-9]{5}(?:-[0-9]{4})?$/;
+      if (emailPattern.test(input as string)) {
+        console.log("validZip " + input);
+        this.$emit("validating", "Zip", "Zip", input, true);
+      } else {
+        this.$emit("validating", "Zip", "Zip", input, false);
       }
+    }
   },
   mounted() {
     this.setRequired(undefined);

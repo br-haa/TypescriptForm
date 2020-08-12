@@ -37,7 +37,6 @@ export default Vue.extend({
         }
         this.$emit("validating", "Email", n, true);
       } else {
-
         this.validateInput(input);
       }
     },

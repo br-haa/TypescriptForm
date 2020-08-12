@@ -42,12 +42,12 @@ export default Vue.extend({
       }
     },
     validateInput: function(input: string | undefined) {
-        if (input !== undefined && input !== "") {
-          this.$emit("validating", "Date", "Date", input, true);
-        } else {
-          this.$emit("validating", "Date", "Date", input, false);
-        }
+      if (input !== undefined && input !== "") {
+        this.$emit("validating", "Date", "Date", input, true);
+      } else {
+        this.$emit("validating", "Date", "Date", input, false);
       }
+    }
   },
   mounted() {
     this.setRequired(undefined);
